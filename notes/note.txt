@@ -1,0 +1,5 @@
+For build: docker compose build
+For Run On Dev: docker compose -f docker-compose.dev.yml up --build
+For Stop On Dev: docker compose -f docker-compose.dev.yml down
+For Run On Prod: docker compose up --build -d
+For Stop On Prod: docker compose down

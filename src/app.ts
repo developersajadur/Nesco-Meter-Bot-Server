@@ -18,7 +18,7 @@ app.get('/', (_req: Request, res: Response) => {
   return sendResponse(res, {
     statusCode: status.OK,
     success: true,
-    message: 'Welcome to Nesco Meter Bot API',
+    message: 'Welcome to Nesco Meter Bot APII',
     data: null
   });
 });
