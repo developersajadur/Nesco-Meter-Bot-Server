@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../../config';
-import AppError from '../../helpers/AppError';
+import AppError from '../../helpers/appError';
 import status from 'http-status';
 
 export const sendTelegramMessage = async (message: string): Promise<void> => {

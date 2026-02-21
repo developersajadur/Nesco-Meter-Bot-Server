@@ -4,7 +4,7 @@ import status from 'http-status';
 import { getBalance } from '../scraper/puppeteer';
 import { sendTelegramMessage } from '../telegram/telegram';
 import { createMessage } from '../../shared/message';
-import AppError from '../../helpers/AppError';
+import AppError from '../../helpers/appError';
 import sendResponse from '../../helpers/sendResponse';
 
 export const manualApiTrigger = async (req: Request, res: Response) => {
@@ -26,9 +26,13 @@ export const manualApiTrigger = async (req: Request, res: Response) => {
       statusCode: status.OK,
       success: true,
       data: result
-    })
+    });
   } catch (error) {
     // console.log(error);
-   throw new AppError(status.INTERNAL_SERVER_ERROR, 'Failed to fetch balance and send message', (error as Error).stack);
+    throw new AppError(
+      status.INTERNAL_SERVER_ERROR,
+      'Failed to fetch balance and send message',
+      (error as Error).stack
+    );
   }
 };
