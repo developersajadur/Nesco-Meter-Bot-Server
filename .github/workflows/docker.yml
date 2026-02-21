@@ -1,17 +1,18 @@
-name: Build and Push Docker Image
+name: Docker Publish
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
 
 jobs:
   docker:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
@@ -23,11 +24,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and Push
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: |
-            mdsajadur/nesco-meter-bot:latest
-            mdsajadur/nesco-meter-bot:${{ github.sha }}
+            sajadurrahman/nesco-meter-bot:latest
+            sajadurrahman/nesco-meter-bot:${{ github.sha }}
+            sajadurrahman/nesco-meter-bot:${{ github.run_number }}

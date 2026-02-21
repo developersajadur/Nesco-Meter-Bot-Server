@@ -26,6 +26,3 @@ jobs:
 
       - name: Build
         run: yarn build
-
-      - name: Docker build test
-        run: docker build -t nesco-bot .
