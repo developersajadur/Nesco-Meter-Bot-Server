@@ -4,11 +4,15 @@ import { manualApiTrigger } from './app/modules/manualApi/manualApiTrigger';
 import { notFoundHandler } from './app/middlewares/notFound';
 import { globalErrorHandler } from './app/middlewares/globalErrorHandler';
 import sendResponse from './app/helpers/sendResponse';
+import { appLimiter } from './app/middlewares/rateLimiter';
 
 const app: Application = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.disable('x-powered-by');
+
+app.use(appLimiter); // Apply rate limiter to all requests
 
 app.get('/', (_req: Request, res: Response) => {
   return sendResponse(res, {

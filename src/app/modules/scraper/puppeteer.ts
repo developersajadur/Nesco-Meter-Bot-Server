@@ -1,5 +1,4 @@
-import puppeteer, { Browser, Page } from 'puppeteer-core';
-import config from '../../config';
+import { launchBrowser } from '../../shared/browser';
 
 interface BalanceResult {
   balance: string | null;
@@ -8,16 +7,11 @@ interface BalanceResult {
 }
 
 export const getBalance = async (meterNumber: string): Promise<BalanceResult> => {
-  let browser: Browser | null = null;
-
+  let browser: Awaited<ReturnType<typeof launchBrowser>> | null = null;
   try {
-    browser = await puppeteer.launch({
-      executablePath: config.chrome_path,
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+    browser = await launchBrowser();
 
-    const page: Page = await browser.newPage();
+    const page = await browser.newPage();
 
     await page.goto('https://customer.nesco.gov.bd/pre/panel/', {
       waitUntil: 'domcontentloaded'
